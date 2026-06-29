@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>📚 CS Exit Exam 2016 | Computer Science (120 Questions)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4fa;
+            font-family: 'Segoe UI', 'Inter', Roboto, system-ui, sans-serif;
+            padding: 1.5rem;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+
+        .exam-header {
+            background: linear-gradient(135deg, #0b2b40, #1a4b6e);
+            color: white;
+            border-radius: 32px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub {
+            opacity: 0.85;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.6rem;
+        }
+
+        .answered-count {
+            background: #ffffff30;
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .score-area {
+            background: #ffd966;
+            color: #2c3e2f;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        button {
+            background: #f4b942;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        button:hover {
+            background: #ffa71a;
+            transform: scale(1.02);
+        }
+
+        .reset-btn {
+            background: #e2e8f0;
+            color: #1e2a2e;
+            margin-left: 12px;
+        }
+
+        .reset-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            border-left: 6px solid #2c7da0;
+            transition: 0.1s;
+        }
+
+        .question-card.correct-highlight {
+            border-left-color: #2e7d32;
+            background: #f1f9f0;
+        }
+
+        .question-card.incorrect-highlight {
+            border-left-color: #c62828;
+            background: #fff6f5;
+        }
+
+        .q-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .q-num {
+            background: #1e4a6b;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+        }
+
+        .q-domain {
+            background: #e9ecef;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .q-text {
+            font-weight: 500;
+            margin: 0.65rem 0 1rem 0;
+            font-size: 0.95rem;
+            line-height: 1.45;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #f8fafc;
+            padding: 0.4rem 1rem;
+            border-radius: 80px;
+            border: 1px solid #dce5ef;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.1s;
+        }
+
+        .option-label:hover {
+            background: #e6edf4;
+        }
+
+        input[type="radio"] {
+            accent-color: #2c7da0;
+            width: 0.9rem;
+            height: 0.9rem;
+            cursor: pointer;
+        }
+
+        .feedback-icon {
+            font-size: 0.75rem;
+            margin-top: 8px;
+            font-weight: 500;
+            padding: 4px 0;
+        }
+
+        .correct-badge { color: #2e7d32; background: #e8f5e9; display: inline-block; padding: 2px 10px; border-radius: 40px; }
+        .wrong-badge { color: #c62828; background: #ffebee; display: inline-block; padding: 2px 10px; border-radius: 40px; }
+
+        .result-panel {
+            background: white;
+            border-radius: 32px;
+            padding: 1.5rem 2rem;
+            margin-top: 1rem;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.98);
+        }
+
+        .result-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.7rem;
+        }
+
+        .mistake-summary {
+            margin-top: 1.2rem;
+            text-align: left;
+            max-height: 320px;
+            overflow-y: auto;
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 1rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .mistake-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #cbd5e1;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #5f6c7a;
+        }
+
+        @media (max-width: 720px) {
+            body { padding: 1rem; }
+            .questions-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="exam-header">
+        <h1>📚 CS Exit Exam 2016 - Computer Science</h1>
+        <div class="sub">Based on National Curriculum | 120 Questions with Answer Key</div>
+        <div class="stats-bar">
+            <div class="answered-count" id="answeredCounter">📌 Answered: 0 / 120</div>
+            <div class="score-area" id="liveScoreDisplay">📋 Not graded yet</div>
+            <div>
+                <button id="submitBtn">✅ SUBMIT & GRADE</button>
+                <button id="resetBtn" class="reset-btn">🔄 Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="questionsContainer" class="questions-grid"></div>
+
+    <div id="resultPanel" class="result-panel" style="display: none;">
+        <div class="result-text" id="finalScoreText">Your Score: --/120</div>
+        <div id="mistakeList" class="mistake-summary"></div>
+        <button id="scrollTopBtn" style="margin-top: 16px; background:#e9ecef;">⬆️ Scroll to top</button>
+    </div>
+    <footer>✅ Select answer for each question. Submit to see your score out of 120. Green = correct, red = wrong/unanswered.</footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 120 Questions from CS Exit Exam 2016
+    // Based on answer key from the document
+    // --------------------------------------------------------------
+    const questionsData = [
+        {id:1, domain:"Computer Arch", text:"Which one of the following is not an I/O command?", options:["Status command","Output data command","Control command","Issue command"], answer:"D"},
+        {id:2, domain:"HTML", text:"Which form attribute is used to assign the server side script file that processes the form data?", options:["Action","Autocomplete","Method","Target"], answer:"A"},
+        {id:3, domain:"SE", text:"When to use the Spiral Model?", options:["Where business modeling is clearly understood","When too risky to develop overall system as one block","When requirements understood early but can change","When requirements are unstable and constantly changing"], answer:"B"},
+        {id:4, domain:"C++", text:"In C++, what does the cout object typically represent?", options:["Standard input stream","Keyboard input buffer","Error output stream","Standard output stream"], answer:"D"},
+        {id:5, domain:"DBMS", text:"In a columnar database, data is stored:", options:["Row-wise","In hierarchical structure","Column-wise","In network model"], answer:"C"},
+        {id:6, domain:"Theory", text:"a→b, L state transition in Turing Machine means:", options:["read a, write b and move left","delete a, read b and move left","write a, read b and move left","replace b by a and move left"], answer:"A"},
+        {id:7, domain:"OS", text:"Characteristic feature of round-robin scheduling in both preemptive and non-preemptive forms:", options:["Assigns priorities based on importance","Selects task with shortest remaining time","Favors short tasks over long tasks","Guarantees fairness with equal time slice"], answer:"D"},
+        {id:8, domain:"DBMS", text:"Indexes in database tables speed up _______ operations.", options:["Read","Delete","Update","Write"], answer:"A"},
+        {id:9, domain:"Programming", text:"Term for a named block of code that performs a specific task:", options:["Condition","Variable","Function","Loop"], answer:"C"},
+        {id:10, domain:"DS", text:"Asymptotic time complexity to add node at end of singly linked list (pointer initially at head):", options:["O(n)","θ(1)","θ(n)","O(1)"], answer:"A"},
+        {id:11, domain:"AI/ML", text:"Learning technique using labeled examples to train model:", options:["Semi-supervised","Unsupervised","Supervised","Reinforcement"], answer:"C"},
+        {id:12, domain:"Networks", text:"PC gets IP from DHCP, taken off network for repair. What happens?", options:["Address returned to pool when lease expires","Lease auto-renewed until PC returned","Configuration held by server","Configuration permanent"], answer:"A"},
+        {id:13, domain:"Algo", text:"Elements must be in sorted order for:", options:["Quick search","Selection search","Binary search","Linear search"], answer:"C"},
+        {id:14, domain:"Algo", text:"Which analysis calculates the upper bound on running time?", options:["Optimal case","Best case","Average case","Worst case"], answer:"D"},
+        {id:15, domain:"Web", text:"How are objects organized in HTML DOM?", options:["Hierarchy","Queue","Stack","Class-wise"], answer:"A"},
+        {id:16, domain:"Compiler", text:"Output of syntax analysis phase:", options:["Syntax tree","Annotated parse tree","Abstract syntax tree","Pattern"], answer:"A"},
+        {id:17, domain:"C++", text:"What does if-else statement allow you to do in C++?", options:["Declare functions","Allocate memory dynamically","Execute block if condition true, else another block","Repeat block multiple times"], answer:"C"},
+        {id:18, domain:"OOP", text:"Which is NOT true about inheritance?", options:["Subclass can add variables but cannot redefine them","Derived class can add or redefine methods","Feature allowing class derivation from another class","Allows customization without modifying original class"], answer:"A"},
+        {id:19, domain:"Compiler", text:"Which is an efficient top-down parser?", options:["Recursive-descent parser","Shift-reduce parser","Non-recursive predictive parser","LR parser"], answer:"C"},
+        {id:20, domain:"OS", text:"Objective of modern OS involving consistent environment for applications:", options:["Maximizing hardware utilization","Ensuring fault tolerance","Providing security and protection","Providing user-friendly interface"], answer:"D"},
+        {id:21, domain:"Security", text:"Which is NOT a concern of availability?", options:["Fault tolerance","Alteration of resources","Usefulness of resources","Fair allocation of resources"], answer:"B"},
+        {id:22, domain:"AI", text:"Strategy expanding root first, then successors - expand layer by layer:", options:["Greedy best-first","DFS","Depth limited","BFS"], answer:"D"},
+        {id:23, domain:"DS", text:"Data structure used to store information about source program constructs:", options:["2D array","Stack","Tree","Queue"], answer:"C"},
+        {id:24, domain:"Networks", text:"Topology with single line cable (backbone) connecting all nodes:", options:["Bus","Ring","Star","Mesh"], answer:"A"},
+        {id:25, domain:"DBMS", text:"Database design concept commonly used in e-commerce platforms for customer orders:", options:["Normalization","Denormalization","Partitioning","Indexing"], answer:"A"},
+        {id:26, domain:"Security", text:"Techniques for deciphering cipher text without knowledge of enciphering mechanism:", options:["Cryptography","Cryptology","Cryptanalysis","Decryption"], answer:"C"},
+        {id:27, domain:"OS", text:"All are scheduling criteria EXCEPT:", options:["CPU utilization","Min Turnaround time","Max Throughput","Max Response time"], answer:"D"},
+        {id:28, domain:"DS", text:"Binary search tree traversal printing values in sorted order:", options:["Pre-order","Pre-order and Post-order","In-order","Post-order"], answer:"C"},
+        {id:29, domain:"Programming", text:"Purpose of control structures like loops and conditional statements:", options:["Control flow of program execution","Perform mathematical operations","Define data types","Allocate memory"], answer:"A"},
+        {id:30, domain:"Web", text:"Method to refresh a webpage:", options:["Location.relocate","Window.relocate","Window.refresh","Location.reload"], answer:"D"},
+        {id:31, domain:"Networks", text:"Refers to how nodes/devices/connections are physically or logically arranged:", options:["Network layer","Network installation","Network protocol","Network topology"], answer:"D"},
+        {id:32, domain:"Theory", text:"Which is NOT a component of Turing Machine?", options:["Read-write head","Control Unit","Stack","Tape"], answer:"C"},
+        {id:33, domain:"SE", text:"Module said to have logical cohesion if:", options:["All functions executed within same time span","Elements depend on interface complexity","Performs loosely related tasks","All elements perform similar operations"], answer:"D"},
+        {id:34, domain:"Programming", text:"First step when encountering syntax error:", options:["Rewrite entire code","Ignore error","Use debugger","Check for typos or incorrect syntax"], answer:"D"},
+        {id:35, domain:"OOP", text:"Concept allowing objects of different classes to be treated as common superclass objects:", options:["Polymorphism","Inheritance","Abstraction","Encapsulation"], answer:"A"},
+        {id:36, domain:"Compiler", text:"Phase where source program is broken into constituent parts:", options:["Semantic analysis","Syntax analysis","Synthesis","Lexical analysis"], answer:"D"},
+        {id:37, domain:"Computer Arch", text:"Part converting machine processed data to user-understandable formats:", options:["Communication components","Output unit","Storage unit","Input unit"], answer:"B"},
+        {id:38, domain:"DS", text:"Stack operations: push(1),push(2),pop,push(1),push(2),pop,pop,push(2),pop. Popped values:", options:["2,1,2,2,1","2,2,1,1,2","2,1,2,2,2","2,2,1,2,2"], answer:"A"},
+        {id:39, domain:"OS", text:"Function managing hardware resources like CPU, memory, I/O devices:", options:["File management","Device management","Process management","Security management"], answer:"C"},
+        {id:40, domain:"Computer Arch", text:"Fastest access time and highest cost memory:", options:["Register","Magnetic disk","Main memory","Cache memory"], answer:"A"},
+        {id:41, domain:"Java", text:"Purpose of interfaces in Java:", options:["Create multiple constructors","Define state and behavior","Define blueprint of class","Achieve multiple inheritance"], answer:"D"},
+        {id:42, domain:"SE", text:"Software engineering principles to reduce programming complexity:", options:["Structured and unstructured","Object Oriented Design","Abstraction and Decomposition","Functional and Non-functional"], answer:"C"},
+        {id:43, domain:"Java", text:"OOP concept allowing class to implement multiple interfaces:", options:["Polymorphism","Encapsulation","Inheritance","Interface"], answer:"D"},
+        {id:44, domain:"Theory", text:"Production S → λ where S is non-terminal is called:", options:["Null Production","Unit Production","Secondary Production","Sigma Production"], answer:"B"},
+        {id:45, domain:"DBMS", text:"Database design concept for real-time interactions in online gaming:", options:["Replication","NoSQL databases","Distributed databases","Partitioning"], answer:"C"},
+        {id:46, domain:"HTML", text:"Correct syntax for document type declaration in HTML5:", options:["</doctype html>","<!doctype html>","<doctype html>","<!DOCTYPE html>"], answer:"B"},
+        {id:47, domain:"Algo", text:"Running time 3n²+7n+12. Complexity class:", options:["Linear","Polynomial","Constant","Exponential"], answer:"B"},
+        {id:48, domain:"Algo", text:"Recursion: solution depends on:", options:["Larger instances of same problem","Smaller instances of same problem","Larger instances of different problems","Smaller instances of different problems"], answer:"B"},
+        {id:49, domain:"SQL", text:"Command to modify existing data in table:", options:["ALTER","UPDATE","MODIFY","CHANGE"], answer:"B"},
+        {id:50, domain:"DBMS", text:"Normal form ensuring no repeating groups:", options:["2NF","3NF","BCNF","1NF"], answer:"D"},
+        {id:51, domain:"AI", text:"Which is NOT true about Reasoning?", options:["Knowledge system to do something","Process of thinking, logically arguing","Theory of blind searching","Deriving conclusion from premises"], answer:"C"},
+        {id:52, domain:"DBMS", text:"Purpose of normalization:", options:["Reduce redundancy and improve data integrity","Speed up query performance","Create complex relationships","Encrypt sensitive data"], answer:"A"},
+        {id:53, domain:"Security", text:"In asymmetric cryptography, message decrypted using:", options:["Receiver's public key","Receiver's private key","Sender's private key","Sender's public key"], answer:"B"},
+        {id:54, domain:"Theory", text:"When are two grammars equivalent?", options:["Language of one subset of other","Alphabets are same","Languages represented are same","Single string member of both languages"], answer:"C"},
+        {id:55, domain:"AI", text:"Reasoning technique based on rules and logical inference:", options:["Abductive reasoning","Analogical reasoning","Deductive reasoning","Inductive reasoning"], answer:"C"},
+        {id:56, domain:"DBMS", text:"Which is NOT a type of DBMS?", options:["PostgreSQL","MongoDB","Java","MySQL"], answer:"C"},
+        {id:57, domain:"Computer Arch", text:"Subtraction is carried out generally by:", options:["1's complement","2's complement","Signed magnitude","BCD subtraction"], answer:"B"},
+        {id:58, domain:"Networks", text:"Which is NOT a component of communication?", options:["Distance","Source","Destination","Medium"], answer:"A"},
+        {id:59, domain:"Security", text:"Which is NOT a static check?", options:["Type checking","Uniqueness checks","Break not in enclosing statement","Memory access errors"], answer:"D"},
+        {id:60, domain:"Security", text:"System monitoring traffic and alerting on suspicious patterns:", options:["Anti-Virus","IDS","Firewall","Router"], answer:"B"},
+        {id:61, domain:"Networks", text:"Machine on which requested resource is stored:", options:["Port","Query","Host","Protocol"], answer:"C"},
+        {id:62, domain:"OS", text:"Scheduling algorithm associated with aging:", options:["Round Robin","SJN","Priority Scheduling","SRTF"], answer:"C"},
+        {id:63, domain:"AI", text:"Why heuristic (A*) search method?", options:["Speed up search with edge lengths for optimal paths","Find path with maximum distance","Find path with non-optimal searches","Find path with maximum cost"], answer:"A"},
+        {id:64, domain:"System Admin", text:"Appropriate time to shut down system:", options:["Regular schedules","Maintenance and upgrade","Check security alerts","When failure occurs"], answer:"B"},
+        {id:65, domain:"SE", text:"Most general life cycle model, others as specialization:", options:["Spiral Model","Prototyping Model","Classical Waterfall","Iterative Waterfall"], answer:"A"},
+        {id:66, domain:"Security", text:"Cryptography using same key for encryption and decryption:", options:["Public key","Parallel","Asymmetric","Symmetric"], answer:"D"},
+        {id:67, domain:"DBMS", text:"E-R data model is based on perception of real world consisting of:", options:["Objects","Classes","Entities","Attributes"], answer:"C"},
+        {id:68, domain:"Networks", text:"Topology where every computer needs N-1 I/O ports:", options:["Star","Mesh","Bus","Ring"], answer:"B"},
+        {id:69, domain:"DBMS", text:"What is primary key?", options:["Unique identifier for each row","Foreign key from another table","Key for encryption","Index on non-unique column"], answer:"A"},
+        {id:70, domain:"C++", text:"Statement to terminate loop prematurely and continue to next iteration:", options:["break;","exit;","return;","continue;"], answer:"D"},
+        {id:71, domain:"Computer Arch", text:"Standard disk interface for PCs:", options:["SCSI","iSCSI","IDE","USB"], answer:"C"},
+        {id:72, domain:"OS", text:"'No preemption' condition in deadlock implies:", options:["Resources can be preempted","Cannot request additional resources while holding","Resources cannot be preempted while in use","Must release all resources when blocked"], answer:"C"},
+        {id:73, domain:"DS", text:"Which is FALSE about trees?", options:["Tree contains a cycle","Tree is non-linear","Tree is connected graph","Tree with n nodes has n-1 edges"], answer:"A"},
+        {id:74, domain:"DBMS", text:"Role of database administrator (DBA):", options:["Designing user interfaces","Developing front-end applications","Writing complex SQL queries","Managing and maintaining databases"], answer:"D"},
+        {id:75, domain:"HTML", text:"Attribute of <img> to display text when image not displayed:", options:["rep","pla","alt","im"], answer:"C"},
+        {id:76, domain:"DS", text:"Queue implemented with arrays - worst-case complexity of enqueue and dequeue:", options:["O(n), O(1)","O(1), O(n)","O(1), O(1)","O(n), O(n)"], answer:"A"},
+        {id:77, domain:"OOP", text:"Concept allowing class to inherit attributes and methods:", options:["Inheritance","Abstraction","Encapsulation","Polymorphism"], answer:"A"},
+        {id:78, domain:"Web", text:"Top level object in JavaScript:", options:["Root object","Document Object","JavaScript Object","Window Object"], answer:"D"},
+        {id:79, domain:"Compiler", text:"Tool to collect separately compiled files into directly executable file:", options:["Linker","Loader","Assembler","Resolver"], answer:"A"},
+        {id:80, domain:"AI", text:"Algorithm used in Game tree for win/lose decisions:", options:["Heuristic Search","Min/Max Algorithm","DFS","Greedy Search"], answer:"B"},
+        {id:81, domain:"System Admin", text:"Which is NOT a reason for backups?", options:["Security incidents","Upgrades and migrations","Hardware failures","Authorization"], answer:"D"},
+        {id:82, domain:"Algo", text:"Which is NOT a characteristic of algorithm?", options:["Definiteness","Output","Finiteness","Efficiency"], answer:"D"},
+        {id:83, domain:"Networks", text:"Windows command to verify IP, subnet mask, gateway, MAC:", options:["ipconfig /all","ping","ipconfig","ipstatus"], answer:"A"},
+        {id:84, domain:"Java", text:"Which is NOT a characteristic of Java?", options:["Object-Oriented","Platform Independent","Difficult to Learn","Architecture neutral"], answer:"C"},
+        {id:85, domain:"Networks", text:"Which is NOT a factor for data rate?", options:["Travel distance","Bandwidth available","Level of noise","Levels of signals"], answer:"A"},
+        {id:86, domain:"Networks", text:"OSI layer ensuring whole message arrives intact and in order:", options:["Session","Transport","Data link","Network"], answer:"B"},
+        {id:87, domain:"SE", text:"SRS includes human computer interface issues from system:", options:["Functional requirements","Non-functional requirements","Goals of implementation","System Testing"], answer:"B"},
+        {id:88, domain:"SE", text:"In classical waterfall, phase preceding design phase:", options:["Requirements analysis and specification","Maintenance","Feasibility study","Coding and unit testing"], answer:"A"},
+        {id:89, domain:"Computer Arch", text:"Which bus is bidirectional?", options:["Control bus","Data bus","Uni-bus","Address bus"], answer:"B"},
+        {id:90, domain:"DBMS", text:"In MySQL, component keeping copies of data for retrieval after data loss:", options:["Buffer Manager","Transaction Manager","Query Engine","Recovery Manager"], answer:"D"},
+        {id:91, domain:"AI/ML", text:"Role of ML in understanding human perception:", options:["Simulating perception through neural networks","No relevance","Not capable of analyzing perceptual data","Only focuses on logical reasoning"], answer:"A"},
+        {id:92, domain:"Security", text:"First step in access control is:", options:["Audit","Authorization","Accreditation","Authentication"], answer:"D"},
+        {id:93, domain:"Algo", text:"Amount of memory needed to run to completion:", options:["Space complexity","Time complexity","Worst case","Best case"], answer:"A"},
+        {id:94, domain:"Theory", text:"Language class most suited for pushdown automata:", options:["Context free","Regular","Recursively enumerable","Unrestricted"], answer:"A"},
+        {id:95, domain:"DBMS", text:"Which is NOT a type of database model?", options:["Linear","Object-Oriented","Hierarchical","Relational"], answer:"A"},
+        {id:96, domain:"Security", text:"Attack on confidentiality where unauthorized individual intercepts communication:", options:["Modification","Interception","Interruption","Fabrication"], answer:"B"},
+        {id:97, domain:"Programming", text:"User programming in machine/assembly language must be aware of EXCEPT:", options:["Register set","Data types supported","Analysis model","Memory structure"], answer:"C"},
+        {id:98, domain:"Compiler", text:"Which is NOT a static check?", options:["Type checking","Uniqueness checks","Break not in enclosing statement","Memory access errors"], answer:"D"},
+        {id:99, domain:"OS", text:"Which is not an I/O command?", options:["Status","Output data","Control","Issue"], answer:"D"},
+        {id:100, domain:"HTML", text:"Form attribute for server-side script:", options:["Action","Autocomplete","Method","Target"], answer:"A"},
+        {id:101, domain:"SE", text:"When to use Spiral Model (second answer):", options:["Business modeling clearly understood","Too risky to develop as one block","Requirements understood early but can change","Requirements unstable and constantly changing"], answer:"B"},
+        {id:102, domain:"C++", text:"cout represents:", options:["Standard input","Keyboard buffer","Error output","Standard output"], answer:"D"},
+        {id:103, domain:"DBMS", text:"Columnar database storage:", options:["Row-wise","Hierarchical","Column-wise","Network"], answer:"C"},
+        {id:104, domain:"Theory", text:"a→b, L means:", options:["read a, write b, move left","delete a, read b, move left","write a, read b, move left","replace b by a, move left"], answer:"A"},
+        {id:105, domain:"OS", text:"Round-robin characteristic:", options:["Priority based","Shortest remaining time","Favors short tasks","Fairness with equal time slice"], answer:"D"},
+        {id:106, domain:"DBMS", text:"Indexes speed up:", options:["Read","Delete","Update","Write"], answer:"A"},
+        {id:107, domain:"Programming", text:"Named block of code:", options:["Condition","Variable","Function","Loop"], answer:"C"},
+        {id:108, domain:"DS", text:"Add node at end of singly linked list complexity:", options:["O(n)","θ(1)","θ(n)","O(1)"], answer:"A"},
+        {id:109, domain:"AI/ML", text:"Learning with labeled examples:", options:["Semi-supervised","Unsupervised","Supervised","Reinforcement"], answer:"C"},
+        {id:110, domain:"Algo", text:"Sorted order required for:", options:["Quick search","Selection search","Binary search","Linear search"], answer:"C"},
+        {id:111, domain:"Algo", text:"Upper bound analysis:", options:["Optimal","Best","Average","Worst"], answer:"D"},
+        {id:112, domain:"Web", text:"HTML DOM object organization:", options:["Hierarchy","Queue","Stack","Class-wise"], answer:"A"},
+        {id:113, domain:"Compiler", text:"Syntax analysis output:", options:["Syntax tree","Annotated parse tree","Abstract syntax tree","Pattern"], answer:"A"},
+        {id:114, domain:"C++", text:"if-else allows:", options:["Declare functions","Dynamic memory","Conditional execution","Repetition"], answer:"C"},
+        {id:115, domain:"OOP", text:"False about inheritance:", options:["Subclass can't redefine variables","Can add/redefine methods","Allows class derivation","Customization without modifying original"], answer:"A"},
+        {id:116, domain:"Compiler", text:"Efficient top-down parser:", options:["Recursive-descent","Shift-reduce","Non-recursive predictive","LR"], answer:"C"},
+        {id:117, domain:"OS", text:"User-friendly interface is objective of:", options:["Hardware utilization","Fault tolerance","Security","Providing convenient environment"], answer:"D"},
+        {id:118, domain:"Security", text:"Not concern of availability:", options:["Fault tolerance","Alteration of resources","Usefulness","Fair allocation"], answer:"B"},
+        {id:119, domain:"AI", text:"Layer-by-layer expansion:", options:["Greedy best-first","DFS","Depth limited","BFS"], answer:"D"},
+        {id:120, domain:"DS", text:"Data structure for source program constructs:", options:["2D array","Stack","Tree","Queue"], answer:"C"}
+    ];
+
+    const TOTAL = questionsData.length;
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        questionsData.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `card-${idx}`;
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'q-title';
+            titleDiv.innerHTML = `<span class="q-num">Q${q.id}</span><span class="q-domain">${q.domain}</span>`;
+            const qTextDiv = document.createElement('div');
+            qTextDiv.className = 'q-text';
+            qTextDiv.innerText = q.text;
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            const letters = ['A','B','C','D'];
+            q.options.forEach((opt, optIdx) => {
+                if (optIdx >= letters.length) return;
+                const letter = letters[optIdx];
+                const radioId = `q_${idx}_${letter}`;
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                label.htmlFor = radioId;
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q_${idx}`;
+                radio.value = letter;
+                radio.id = radioId;
+                radio.addEventListener('change', () => updateAnsweredCount());
+                label.appendChild(radio);
+                let optText = opt.length > 100 ? opt.substring(0, 100) + '…' : opt;
+                label.appendChild(document.createTextNode(` ${letter}. ${optText}`));
+                optionsDiv.appendChild(label);
+            });
+            card.appendChild(titleDiv);
+            card.appendChild(qTextDiv);
+            card.appendChild(optionsDiv);
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'feedback-icon';
+            feedbackDiv.id = `fb-${idx}`;
+            card.appendChild(feedbackDiv);
+            container.appendChild(card);
+        });
+        updateAnsweredCount();
+    }
+
+    function updateAnsweredCount() {
+        let answered = 0;
+        for (let i = 0; i < TOTAL; i++) {
+            const radios = document.getElementsByName(`q_${i}`);
+            if (Array.from(radios).some(r => r.checked)) answered++;
+        }
+        document.getElementById('answeredCounter').innerText = `📌 Answered: ${answered} / ${TOTAL}`;
+    }
+
+    function computeAndShowResult() {
+        let score = 0;
+        const userSelections = new Array(TOTAL).fill(null);
+        for (let i = 0; i < TOTAL; i++) {
+            const radios = document.getElementsByName(`q_${i}`);
+            let selected = null;
+            for (let r of radios) if (r.checked) { selected = r.value; break; }
+            userSelections[i] = selected;
+            if (selected === questionsData[i].answer) score++;
+        }
+        const percent = Math.round((score / TOTAL) * 100);
+        document.getElementById('resultPanel').style.display = 'block';
+        document.getElementById('finalScoreText').innerHTML = `🎯 Your Score: ${score} / ${TOTAL} (${percent}%)`;
+        let mistakeHtml = `<strong>📖 Detailed review (incorrect or unanswered):</strong><br>`;
+        let mistakeCount = 0;
+        for (let i = 0; i < TOTAL; i++) {
+            const selected = userSelections[i];
+            const correctAns = questionsData[i].answer;
+            if (selected !== correctAns) {
+                mistakeCount++;
+                const q = questionsData[i];
+                const shortText = q.text.length > 80 ? q.text.substring(0,80)+"…" : q.text;
+                const correctIndex = "ABCD".indexOf(correctAns);
+                const correctFull = correctIndex !== -1 && q.options[correctIndex] ? q.options[correctIndex].substring(0, 100) : "";
+                mistakeHtml += `<div class="mistake-item">❌ <strong>Q${q.id}</strong> (${q.domain}): ${shortText}<br> &nbsp;&nbsp;✔ Correct: ${correctAns}. ${correctFull}<br> &nbsp;&nbsp;Your answer: ${selected ? selected : '(none)'}</div>`;
+            }
+        }
+        if (mistakeCount === 0) mistakeHtml = `<span>🏆 Perfect! No mistakes. Excellent preparation.</span>`;
+        document.getElementById('mistakeList').innerHTML = mistakeHtml;
+
+        for (let i = 0; i < TOTAL; i++) {
+            const card = document.getElementById(`card-${i}`);
+            const selected = userSelections[i];
+            const correct = questionsData[i].answer;
+            const isCorrect = (selected === correct);
+            card.classList.remove('correct-highlight', 'incorrect-highlight');
+            if (selected && isCorrect) card.classList.add('correct-highlight');
+            else card.classList.add('incorrect-highlight');
+            const fbDiv = document.getElementById(`fb-${i}`);
+            if (fbDiv) {
+                if (selected && isCorrect) fbDiv.innerHTML = '<span class="correct-badge">✅ Correct</span>';
+                else if (selected && !isCorrect) fbDiv.innerHTML = `<span class="wrong-badge">❌ Wrong (correct: ${correct})</span>`;
+                else fbDiv.innerHTML = `<span class="wrong-badge">⚠️ Unanswered (correct: ${correct})</span>`;
+            }
+        }
+        document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetAll() {
+        for (let i = 0; i < TOTAL; i++) {
+            const radios = document.getElementsByName(`q_${i}`);
+            radios.forEach(r => r.checked = false);
+            const card = document.getElementById(`card-${i}`);
+            if (card) card.classList.remove('correct-highlight', 'incorrect-highlight');
+            const fbDiv = document.getElementById(`fb-${i}`);
+            if (fbDiv) fbDiv.innerHTML = '';
+        }
+        updateAnsweredCount();
+        document.getElementById('resultPanel').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuestions();
+        document.getElementById('submitBtn').addEventListener('click', computeAndShowResult);
+        document.getElementById('resetBtn').addEventListener('click', resetAll);
+        document.getElementById('scrollTopBtn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    });
+</script>
+</body>
+</html>
